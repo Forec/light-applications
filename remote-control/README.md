@@ -19,9 +19,13 @@
 * Two files will be created under `E:\` in remote hosts, I didn't hide these files. You can use the function provided in `trojan.cpp` which definition is `bool hideFile(const char *path)`. The two files are `E:\key.log` and `E:\screen.tmp`, which will be created by `remote.exe` when client ask for keyboard record or screenshots. **If you want to hide them, remember to use function `hideFile` to hide `E:\screen.tmp` whenever you ask for screenshot.** Since the new screenshot overrides the past screenshot, but the keyboard record is an append operation.
 
 * **TO HIDE**: I didn't do anything protecting `remote.exe`, any common anti-virus software like 360 or Avira can easily kill it. Good news is the Windows Defender doesn't notice this program. To pack the server program, I recommand the `iexpress`, since every Windows system has it as a built-in application, and it's easy, most important. However, **packer is not enough for protect this program from anti-virus software.** Instead of packer, you can also use DLL-Injection( only works for Windows lower than Windows7), which is also provided in this repository. But, **PLEASE REMEMBER SELF-DISCIPLINE**.
+* The executable file is in `compiled.tar`, you can just run `remote.exe` to have a look.
 
 ### CLIENT
 * Compile: I put all files needed in folder `client`, if you have Qt Creator, just open `client.pro`, else please build a new project with other IDEs.
+
+* The executable file is in `compiled.tar`, you can just run `client.exe` to have a look.
+
 * Assume the program we get after released is `client.exe`, it will show you a window like this. Buttons left are `Refresh` and `Create`. You can click `Create` to add a remote host, click `Refresh` to refresh all hosts' status.
 <img src="http://7xktmz.com1.z0.glb.clouddn.com/remote-control-client-1.png" width = "400px"/>
 
@@ -42,6 +46,7 @@
  * **Get Keyboard Record**: Get the remote host's keyboard record, records will be displayed in `QTextEdit` too.
  * **Export Logs**: Export your operation history for the selected remote host to a `.log` file.
  * **Delete**: Delete the remote host from your database.
+ * **Send Shell Command**: You can input **shell commands** (not CMD commands, I use powershell to execute these commands) in the `QLineEdit` widget, and press `Enter` or click `Send` to execute the commands in remote hosts. The results will displayed in `QTextEdit`.
 
 ## Attentions
 * **Project Configuration**: Since I use `QSqlDatabase` to query and store data, a line `Qt += sql` has been added to the project file `client.pro`.
@@ -69,10 +74,13 @@
 * Get Screenshot. The client opens the screenshot after it received.   
 <img src="http://7xktmz.com1.z0.glb.clouddn.com/remote-control-client-8.png" width="400px"/>
 
+* Send Commands. I send `cd ..; ls; mkdir test`, then the remote create a folder named `test` in the `%PATH_TO_REMOTE%/../`.
+<img src="http://7xktmz.com1.z0.glb.clouddn.com/remote-control-client-9.png" width="400px"/>
 
 ## Bugs
 * When send big files, the client and remote server are hard to synchronizate. **Temporarily, when sending data, I ask both the client and remote server waiting for a response to send next packet.** Obviously it's not a correct method. So crash happened when transmitting big files.
 * **TODO**: It should be possible that user can get remote file and do other operations at the same time. However, to achieve this function, I need to start another thread, it's not hard, but the current function is enough for temporary use, so I didn't add this part. Maybe later.
+* **TODO**: The shell function is not very convenient, since **the path `remote.exe` execute  commands is `%PATH_TO_REMOTE%`**, and each time you want to execute a new command, the path will go back to the dir. To change the path, add `cd PATH` to the path you want, and use `;` to append other commands.
 
 ## Update-logs
 * 2016-9-11~12: Write GUI for client, with some basic tests.

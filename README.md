@@ -5,6 +5,7 @@ This repository contains several self-made light-applications, for fun and pract
 * Simple **Remote-Control** program with graphical user interface, Written in C++. Details see [here](/remote-control/README.md).
 * An ugly **DLL-Injection** tool without GUI, Written in C++. Details see [here](/inject/README.md).
 * A x64 **DLL template**, which can be used in injection. Details see [here](/injectDLL/README.md).
+* Small script for BUPT students, including: automatically calculating gpa, logining into GW, etc. Careful, **These scripts are customized for BUPT** ( Beijing University of Posts and Telecommunications ). Details see [here](/scripts-for-bupt/README.md).
 * TODO: A tool, get differential(math) for formula with basic operations.
 * TODO: A simple **File Transfer** tool, maybe written in Python3 or Golang.
 

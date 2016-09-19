@@ -9,3 +9,4 @@ Just run `python login.py <id> <pwd>`, you can write this as a `.sh` on Linux or
 
 ## Update-logs
 * 2016-9-04: Add `login.py`.
+* 2016-9-19: Fix problems for logining into `10.4.1.2`. Add `sleep` to avoid the initial time for system.

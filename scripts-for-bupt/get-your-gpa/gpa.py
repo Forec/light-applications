@@ -1,5 +1,6 @@
 #coding=utf8
 
+__author__ = 'Forec'
 import urllib, urllib2, cookielib, re, sys, os
 import pytesseract
 from PIL import Image

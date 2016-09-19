@@ -1,5 +1,7 @@
 #coding=utf-8
-
+__author__ = 'Forec'
+import time
+import sys
 import urllib
 import urllib2
 import cookielib
@@ -21,9 +23,18 @@ postdata=urllib.urlencode({
     '0MKKey':''
 })
 
+time.sleep(5)
+
+req = urllib2.Request(
+    url = 'http://10.4.1.2',
+    data = postdata
+)
+opener.open(req)
+
+time.sleep(2)
+
 req = urllib2.Request(
     url = 'http://10.3.8.211',
     data = postdata
 )
-
 opener.open(req)

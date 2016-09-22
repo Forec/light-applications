@@ -5,6 +5,7 @@
 * This project contains two parts. The **SERVER** , which should be executed in remote hosts, is in folder `server`, and the **CLIENT**, is in folder `client`,  used to control the remote hosts.
 * The Visual Studio project file `remote.sln` is in folder `server`. I wrote this project with VS Ultimate 2013, version `12.0.21005.1 REL`.
 * The Visual Studio project file `client.sln` is in folder `client`. I wrote this project with Qt-windows-x86-msvc2013_64, version `5.6.0`. The Qt Creator is 32bits based on MSVC2013, version `3.6.1`. Some configurations may have relationship with the tool.
+* I compressed the `remote.exe` and `client.exe` into `compiled.tar`, which can be downloaded from my cloud storage: [here](http://7xktmz.com1.z0.glb.clouddn.com/compiled.tar)
 
 ## Usage
 ### SERVER
@@ -81,3 +82,4 @@
 * 2016-9-15: Add several main functions, deal with keyboard, get screenshot, etc.
 * 2016-9-16: Finish all functions, fix some bugs, improve the client. Some basic tests passed.
 * 2016-9-17: Fix some problems in `README.md`.
+* 2016-9-23: Fix links and move `compiled.tar` to cloud storage.

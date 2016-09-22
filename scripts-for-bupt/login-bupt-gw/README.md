@@ -5,7 +5,7 @@
 This small script is written in python 2.7, all packages being used are built-in packages.
 
 ## Usage
-Just run `python login.py <id> <pwd>`, you can write this as a `.sh` on Linux or `.bat` on Windows. Also, you can run the executable binary file `login.exe` in folder. Put the bash file in your auto-start list, no more GW login actinos.
+Just run `python login.py <id> <pwd>`, you can write this as a `.sh` on Linux or `.bat` on Windows. Also, you can just download `login.exe` from my cloud storage: [here](http://7xktmz.com1.z0.glb.clouddn.com/login.exe). Put the bash file in your auto-start list, no more GW login actinos.
 
 ## Update-logs
 * 2016-9-04: Add `login.py`.

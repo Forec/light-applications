@@ -6,7 +6,7 @@ This small script is written in python 2.7, using `PIL`. You can install by exec
 * **Attentions**: The deafult setting for this script is: 4 numbers/letters in the generated CAPTCHA, width is 400, height is 200. You can assign how many numbers/letters in the CAPTCHA, and the `width`. Height is just `[width / 2]`.
 
 ## Usage
-The python version is 2.7, so just `python CAPTCHA.py <id> <pwd>`, the script will create a CAPTCHA named `out.jpg`. Also, I build an executable binary file, you can just use the `CAPTCHA.exe` in this folder too.
+The python version is 2.7, so just `python CAPTCHA.py <id> <pwd>`, the script will create a CAPTCHA named `out.jpg`. Also, I build an executable binary file, you can just download the `CAPTCHA.exe` from my cloud storage: [here](http://7xktmz.com1.z0.glb.clouddn.com/CAPTCHA.exe).
 
 ## Update-logs
 * 2016-9-19: Add `CAPTCHA.py`.

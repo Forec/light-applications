@@ -9,7 +9,7 @@ This small script is written in python 2.7, using several packages, list below.
 * **Attentions**: Without `PIL` and `tesseract-ocr`, the script cannot automatically fill in the CAPTCHA for you. You may need to modify my script and verify the CAPTCHA yourself. Another very import notice: **THE CODEC I USE IS GBK**, change it yourself if your terminal is utf8 or other codecs.
 
 ## Usage
-The python version is 2.7, so just `python gpa.py <id> <pwd>`, the script will return your gpa. Also, I build an executable binary file, you can just use the `gpa.exe` in this folder too. It will look like this, for BUPT students, optional classes in the evening will not be counted into gpa. Here I hide my Username, Password and Scores.  
+The python version is 2.7, so just `python gpa.py <id> <pwd>`, the script will return your gpa. Also, I build an executable binary file, you can just download `gpa.exe` from my cloud storage: [here](http://7xktmz.com1.z0.glb.clouddn.com/gpa.exe). It will look like this, for BUPT students, optional classes in the evening will not be counted into gpa. Here I hide my Username, Password and Scores.  
 <img src="http://7xktmz.com1.z0.glb.clouddn.com/gpa-get.png" width="500px">
 
 ## Update-logs

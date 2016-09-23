@@ -12,6 +12,7 @@ Just run `python2 video2txt.py <parameters>`. Also, you can download the executa
 * --file: the video you want to transform.
 * --output or -o: the directory you want to store the txts, you can use absolute path or relative path.
 * --frame: how many frames you want to transform.
+* --color: output "colorful" txts or just black-white txts with only '#' and space? Default is black-white. If you want more chars, set `--color=True`.
 * --interval: transform a frame between interval frames. For example, when interval is 0, the program will transform every frame. This parameter should not conflict with `play.py`, here, is interval is 0, then the frame parameter in `play.py` should be 25( if your video is 25 frames/s ), else if won't display well. Its default value is 24, it means 1 frame/s if video is 25 frames/s.
 * --width: the width of txt image.
 * --height: the height of txt image.
@@ -30,3 +31,4 @@ You may find `openCV` for python is too hard to install. Several tips here to he
 
 ## Update-logs
 * 2016-9-22: Add this project.
+* 2016-9-23: Two methods with args.

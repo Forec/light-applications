@@ -8,6 +8,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument('--file')
 parser.add_argument('--frame', type=int, default=5)
+parser.add_argument('--color', type=bool, default=False)
 parser.add_argument('--interval', type=int, default = 24)
 parser.add_argument('-o', '--output',type=str, default="output")
 parser.add_argument('--width', type=int, default=48)
@@ -21,8 +22,9 @@ INTERVAL = args.interval
 WIDTH = args.width
 HEIGHT = args.height
 OUTPUT = args.output
+COLORFUL = args.color
 
-ascii_char = list("$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. ")
+ascii_char = list("$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'.       ")
 
 class Video2TXT:
 	@staticmethod
@@ -57,15 +59,17 @@ class Video2TXT:
 				cap.read()
 			im = Image.fromarray(frame)
 			im.resize((WIDTH, HEIGHT), Image.ANTIALIAS)
-			# im = im.convert('RGB')
-			im = im.convert('L')
-			pix = im.load()
+			if COLORFUL:
+				im = im.convert('RGB')
+			else:
+				im = im.convert('L')
+				pix = im.load()
 			for i in range(HEIGHT):
 				for j in range(WIDTH):
-					# colorful
-					# txt += Video2TXT.get_char(*im.getpixel((j,i)))		
-					# gray
-					txt += Video2TXT.get_gray(pix[i, j])
+					if COLORFUL:
+						txt += Video2TXT.get_char(*im.getpixel((j,i)))		
+					else:
+						txt += Video2TXT.get_gray(pix[i, j])
 				txt += '\n'
 			with open("frame-"+str(curframe)+".txt", 'w') as f:
 				f.write(txt)

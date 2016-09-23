@@ -7,6 +7,7 @@ This repository contains several self-made light-applications, for fun and pract
 * A x64 **DLL template**, which can be used in injection. Details see [here](/injectDLL).
 * Small script for BUPT students, including: automatically calculating gpa, logining into GW, etc. Careful, **These scripts are customized for BUPT** ( Beijing University of Posts and Telecommunications ). Details see [here](/scripts-for-bupt).
 * A txt-player, display many txts in CMD view just like movies. You can use this tool to **transform a video into many txts and display them** . Details see [here](/txt-player)
+* A simple **video chat** program, support both IPv4 and IPv6. No more worries about data flow fee if you always have ichat with someone. Details see [here](/lan-ichat).
 * TODO: A simple **File Transfer** tool, maybe written in Python3 or Golang.
 
 

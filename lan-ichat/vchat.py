@@ -1,40 +1,25 @@
+from socket import *
+import threading
 import cv2
 import sys
 import struct
 import pickle
 import time
-import threading
-import argparse
+import zlib
 import numpy as np
-from socket import *
 
-parser = argparse.ArgumentParser()
-
-parser.add_argument('--host', type=str, default='127.0.0.1')
-parser.add_argument('--port', type=int, default=10087)
-parser.add_argument('--noself', type=bool, default=False)
-parser.add_argument('-v', '--version', type=int, default=4)
-
-args = parser.parse_args()
-
-IP = args.host
-PORT = args.port
-VERSION = args.version
-SHOWME = not args.noself
-
-class Server(threading.Thread):
-    def __init__(self, port) :
-        print("server starts...")
+class Video_Server(threading.Thread):
+    def __init__(self, port, version) :
+        print("VEDIO server starts...")
         threading.Thread.__init__(self)
         self.setDaemon(True)
         self.ADDR = ('', port)
-        if VERSION == 4:
+        if version == 4:
             self.sock = socket(AF_INET ,SOCK_STREAM)
         else:
             self.sock = socket(AF_INET6 ,SOCK_STREAM)
         self.sock.bind(self.ADDR)
         self.sock.listen(1)
-        self.thStop = False
     def __del__(self):
         self.sock.close()
         try:
@@ -43,7 +28,7 @@ class Server(threading.Thread):
             pass
     def run(self):
         conn, addr = self.sock.accept()
-        print("client success connected...")
+        print("remote VEDIO client success connected...")
         data = "".encode("utf-8")
         payload_size = struct.calcsize("L")
         cv2.namedWindow('Remote', cv2.WINDOW_NORMAL)
@@ -55,29 +40,41 @@ class Server(threading.Thread):
             msg_size = struct.unpack("L", packed_size)[0]
             while len(data) < msg_size:
                 data += conn.recv(81920)
-            frame_data = data[:msg_size]
+            zframe_data = data[:msg_size]
             data = data[msg_size:]
+            frame_data = zlib.decompress(zframe_data)
             frame = pickle.loads(frame_data)
             cv2.imshow('Remote', frame)
             if cv2.waitKey(1) & 0xFF == 27:
                 break
 
-class Client(threading.Thread):
-    def __init__(self ,ip, port):
+class Video_Client(threading.Thread):
+    def __init__(self ,ip, port, showme, level, version):
         threading.Thread.__init__(self)
         self.setDaemon(True)
         self.ADDR = (ip, port)
-        if VERSION == 4:
+        self.showme = showme
+        if level == 0:
+            self.interval = 0
+        elif level == 1:
+            self.interval = 1
+        elif level == 2:
+            self.interval = 2
+        else:
+            self.interval = 3
+        self.fx = 1 / (self.interval + 1)
+        if self.fx < 0.3:
+            self.fx = 0.3
+        if version == 4:
             self.sock = socket(AF_INET, SOCK_STREAM)
         else:
             self.sock = socket(AF_INET6, SOCK_STREAM)
         self.cap = cv2.VideoCapture(0)
-        self.thStop = False
-        print("client starts...")
+        print("VEDIO client starts...")
     def __del__(self) :
         self.sock.close()
         self.cap.release()
-        if SHOWME:
+        if self.showme:
             try:
                 cv2.destroyAllWindows()
             except:
@@ -90,27 +87,22 @@ class Client(threading.Thread):
             except:
                 time.sleep(3)
                 continue
-        if SHOWME:
+        if self.showme:
             cv2.namedWindow('You', cv2.WINDOW_NORMAL)
-        print("client connected...")
+        print("VEDIO client connected...")
         while self.cap.isOpened():
             ret, frame = self.cap.read()
-            if SHOWME:
+            if self.showme:
                 cv2.imshow('You', frame)
                 if cv2.waitKey(1) & 0xFF == 27:
-                    break
-            data = pickle.dumps(frame)
+                    self.showme = False
+                    cv2.destroyWindow('You')
+            sframe = cv2.resize(frame, (0,0), fx=self.fx, fy=self.fx)
+            data = pickle.dumps(sframe)
+            zdata = zlib.compress(data, zlib.Z_BEST_COMPRESSION)
             try:
-                self.sock.sendall(struct.pack("L", len(data)) + data)
+                self.sock.sendall(struct.pack("L", len(zdata)) + zdata)
             except:
                 break
-
-if __name__ == '__main__':
-    client = Client(IP, PORT)
-    server = Server(PORT)
-    client.start()
-    server.start()
-    while True:
-        time.sleep(1)
-        if not server.isAlive() or not client.isAlive():
-            sys.exit(0)
+            for i in range(self.interval):
+                self.cap.read()

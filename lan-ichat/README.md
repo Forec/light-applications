@@ -19,4 +19,4 @@ Just run `python3 ichat.py <parameters>`. Also, you can download the executable 
 
 
 ## Update-logs
-* 2016-9-23: Add this project, vedio is ok. Define `v0.1`.
+* 2016-9-23: Add this project, video is ok. Define `v0.1`.

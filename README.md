@@ -10,6 +10,7 @@ This repository contains several self-made light-applications, for fun and pract
 * A simple **video chat** program, support both IPv4 and IPv6. No more worries about data flow fee if you always have ichat with someone. Details see [here](/lan-ichat).
 * **Video capture**, for downloading videos in your browsers. Some videos don't have a permanent link? This tool can deal with it. Details see [here](/video-capture).
 * **Port Scanner**, a simple tool which is familiar to everyone, written in three different languages. Details see [here](/port-scanner).
+* **Write messages into image**, small but useful tool for fun. Details see [here](/image-message-io).
 * TODO: A simple **File Transfer** tool, maybe written in Python3 or Golang.
 
 

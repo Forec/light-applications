@@ -38,3 +38,4 @@ Usage:
 
 ## Update-logs
 * 2016-10-05: Add this project.
+* 2016-10-06: Add license.

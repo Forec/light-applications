@@ -55,6 +55,8 @@ int main(int argc, char* argv[]){
 		sprintf(recordName, "%d.avi", t);
 	}
 
+	cout << "Starts After 2s..." << endl;
+	Sleep(2000);
 	if (showWindow)
 		namedWindow("Monitor");
 

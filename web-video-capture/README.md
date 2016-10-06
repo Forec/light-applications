@@ -1,4 +1,4 @@
-# Video Capture
+# Web Video Capture
 > This project is a spider-like tool for **downloading videos in browser** . For example, I want to download one of my favourite cartoons named 《Zombie Cats》, it can be found in bilibili, url is [http://www.bilibili.com/video/av6376703/](http://www.bilibili.com/video/av6376703/). Three ways for you to download the video, register in bilibili, use fiddler(or other softwares) to capture the address of video, or use my tool.
 
 ## Platform
@@ -25,3 +25,4 @@ Just run `python3 video_capture.py <parameters>`. Videos will be downloaded into
 
 ## Update-logs
 * 2016-9-23: Add this project.
+* 2016-10-6: Rename.

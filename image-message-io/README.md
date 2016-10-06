@@ -1,4 +1,4 @@
-# Image Message IO
+# Image Message IO （图片信息读写）
 > This project is a small package for **writing messages into images to avoid detection**. You can also regard it as Steganography.
 
 ## Platform
@@ -21,3 +21,4 @@ An example is given in `image_message_io.py`.
 
 ## Update-logs
 * 2016-9-30: Add this project.
+* 2016-10-6: Build repository.

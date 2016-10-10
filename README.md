@@ -12,6 +12,7 @@ This repository is an index for several self-made light-applications, for fun an
 * **Write messages into image（图片为载体的信息读写库）**, small but useful tool for fun. Details see [here](https://github.com/Forec/image-message-io).
 * **Monitor Recorder（运动检测监控记录工具）**, a program designed for monitoring and recording unnormal actions. Just like what the normal monitors do. Details see [here](https://github.com/Forec/monitor-recorder).
 * **Fweb-Frame（一个Web框架）**, written in C++, a good example for learning web frames. Details see [here](https://github.com/Forec/fweb-frame).
+* **Markov-Speaking（马尔科夫链随机语言生成库）**, written in `Python 2.7`, can generate English/Chinese random sentences based on the trainning file. Details see [here](https://github.com/Forec/Markov-Speaking).
 * \#TODO: A simple **File Transfer（局域网内文件传输工具）** tool, maybe written in Python3 or Golang.
 
 

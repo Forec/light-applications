@@ -13,8 +13,16 @@ This repository is an index for several self-made light-applications, for fun an
 * **Monitor Recorder（运动检测监控记录工具）**, a program designed for monitoring and recording unnormal actions. Just like what the normal monitors do. Details see [here](https://github.com/Forec/monitor-recorder).
 * **Fweb-Frame（一个Web框架）**, written in C++, a good example for learning web frames. Details see [here](https://github.com/Forec/fweb-frame).
 * **Markov-Speaking（马尔科夫链随机语言生成库）**, written in `Python 2.7`, can generate English/Chinese random sentences based on the trainning file. Details see [here](https://github.com/Forec/Markov-Speaking).
+* Capture **Text-Cooccurrence（文本共现）** network from a novel and visualize it. Details see [here](https://github.com/Forec/text-cooccurrence).
 * \#TODO: A simple **File Transfer（局域网内文件传输工具）** tool, maybe written in Python3 or Golang.
 
 
 ## License
 All codes in this repository are licensed under the terms you may find in the file named "LICENSE" in this directory.
+
+## 授权声明
+我已授权[实验楼](https://www.shiyanlou.com)使用以下几个仓库中的代码，并将我编写的对应教程发表在实验楼上。未经实验楼或本人同意，其他机构、媒体一律不得转载、使用教程。
+* [马尔科夫链随机语言生成](https://github.com/Forec/Markov-Speaking)：教程地址 [https://www.shiyanlou.com/courses/678](https://www.shiyanlou.com/courses/678)
+* [文本共现网络提取和可视化](https://github.com/Forec/text-cooccurrence)：教程地址 [https://www.shiyanlou.com/courses/677](https://www.shiyanlou.com/courses/677)
+* [运动检测监控记录工具](https://github.com/Forec/monitor-recorder)：教程地址 [https://www.shiyanlou.com/courses/671](https://www.shiyanlou.com/courses/671)
+* [局域网视频聊天工具](https://github.com/Forec/lan-ichat)：教程地址 [https://www.shiyanlou.com/courses/672](https://www.shiyanlou.com/courses/672)

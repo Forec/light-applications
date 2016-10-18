@@ -14,7 +14,7 @@ This repository is an index for several self-made light-applications, for fun an
 * **Fweb-Frame（一个Web框架）**, written in C++, a good example for learning web frames. Details see [here](https://github.com/Forec/fweb-frame).
 * **Markov-Speaking（马尔科夫链随机语言生成库）**, written in `Python 2.7`, can generate English/Chinese random sentences based on the trainning file. Details see [here](https://github.com/Forec/Markov-Speaking).
 * Capture **Text-Cooccurrence（文本共现）** network from a novel and visualize it. Details see [here](https://github.com/Forec/text-cooccurrence).
-* \#TODO: A simple **File Transfer（局域网内文件传输工具）** tool, maybe written in Python3 or Golang.
+* A simple **File Transfer（局域网内文件传输工具）** tool, written in Golang 1.6. Details see [here](https://github.com/Forec/simple-go-ftp).
 
 
 ## License

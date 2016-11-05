@@ -1,6 +1,8 @@
 # Welcome to Forec's Light-Application Repository
 This repository is an index for several self-made light-applications, for fun and practice. Written in C/C++, Python2.7, Python3.5 and Golang 1.7.3, maybe more languages further. The repository will be in continuously improvement in future. **If you have thoughts for any of them, please [e-mail me](mailto:forec@bupt.edu.cn) or just open your PR, I am very glad to learn from your brilliant idea.**
 
+[点此查看中文版](http://blog.forec.cn/projects/index.html)
+
 ## Introductions
 * Basic practice for [**assembly languages（汇编语言基础练习题）**](https://github.com/Forec/assembly-exercise), you can give yourself a test and push your code into that repository. 
 * Simple [**Remote-Control（远程控制）**](https://github.com/Forec/remote-control) program with graphical user interface, Written in C++. 

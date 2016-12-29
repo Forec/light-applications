@@ -4,6 +4,7 @@ This repository is an index for several self-made light-applications, for fun an
 [点此查看中文版](http://blog.forec.cn/projects/index.html)
 
 ## Introductions
+* [**Zenith Cloud（顶点云）**](https://github.com/Forec/zenith-cloud), written in Golang 1.7.3, see the [demo](http://cloud.forec.cn/).
 * [**Online API Platform（在线 API 平台）**](https://github.com/Forec/web-api), provides some online API services on my own website [http://forec.cn](http://forec.cn).
 * Basic practice for [**assembly languages（汇编语言基础练习题）**](https://github.com/Forec/assembly-exercise), you can give yourself a test and push your code into that repository. 
 * Simple [**Remote-Control（远程控制）**](https://github.com/Forec/remote-control) program with graphical user interface, Written in C++. 
@@ -19,7 +20,6 @@ This repository is an index for several self-made light-applications, for fun an
 * [**Markov-Speaking（马尔科夫链随机语言生成库）**](https://github.com/Forec/Markov-Speaking), written in `Python 2.7`, can generate English/Chinese random sentences based on the trainning file. 
 * Capture [**Text-Cooccurrence（文本共现）**](https://github.com/Forec/text-cooccurrence) network from a novel and visualize it.
 * A simple [**File Transfer（文件传输/FTP）**](https://github.com/Forec/simple-go-ftp) tool, written in Golang 1.7.3.
-* [**Cloud Storage（云存储）**](https://github.com/Forec/cloud-storage), written in Golang 1.7.3, will be finished in one or two months, it will include a simple package for developing basic cloud storage server/client (Also includes a web server for non-client users and an app for android, that will be put in other repositories).
 * [**SYN flood（SYN洪水拒绝服务攻击）**](https://github.com/Forec/ddos-synflood), written in C++, using libnet. Support multi-threads.
 
 ## License

@@ -5,6 +5,7 @@ This repository is an index for several self-made light-applications, for fun an
 
 ## Introductions
 * [**Zenith Cloud（顶点云）**](https://github.com/Forec/zenith-cloud), written in Golang 1.7.3, see the [demo](http://cloud.forec.cn/).
+* [**Zenith DM（顶点云设备管理）**](https://github.com/Forec/zenith-monitor), control your devices everywhere, see the [demo](http://cloud-monitor.forec.cn/).
 * [**Online API Platform（在线 API 平台）**](https://github.com/Forec/web-api), provides some online API services on my own website [http://forec.cn](http://forec.cn).
 * Basic practice for [**assembly languages（汇编语言基础练习题）**](https://github.com/Forec/assembly-exercise), you can give yourself a test and push your code into that repository. 
 * Simple [**Remote-Control（远程控制）**](https://github.com/Forec/remote-control) program with graphical user interface, Written in C++. 

@@ -11,7 +11,7 @@ This repository is an index for several self-made light-applications, for fun an
 * Simple [**Remote-Control（远程控制）**](https://github.com/Forec/remote-control) program with graphical user interface, Written in C++. 
 * An ugly [**DLL-Injection（DLL注入）**](https://github.com/Forec/inject-windows-dll) tool without GUI, Written in C++. A x64 **DLL template（DLL模板）** is also in that repository, which can be used in injection.
 * Small script for BUPT students, including: automatically calculating gpa, logining into GW, etc. Careful, **These scripts are customized for BUPT（脚本仅可在北京邮电大学校内使用）** ( Beijing University of Posts and Telecommunications ). Details see [here](https://github.com/Forec/scripts-for-bupt).
-* A txt-player, display many txts in CMD view just like movies. You can use this tool to **transform a video into many txts and display them（将一个视频文件转换为一系列用符号表示的txt文件）**. Details see [here](https://github.com/Forec/txt-player).
+* A txt-player, display many txts in CMD view just like movies. You can use this tool to transform a video into many txts and display them（将一个视频文件转换为一系列用符号表示的txt文件）. Details see [here](https://github.com/Forec/txt-player).
 * A simple [**video chat（视频聊天工具）**](https://github.com/Forec/lan-ichat) program, support both IPv4 and IPv6, the current version can support all the network conditions includeing hosts in different protocals.
 * [**Web Video Downloader（在线视频下载工具）**](https://github.com/Forec/web-video-downloader), for downloading videos in your browsers. Some videos don't have a permanent link? This tool can deal with it.
 * [**Port Scanner（端口扫描工具）**](https://github.com/Forec/port-scanner), a simple tool which is familiar to everyone, written in three different languages.

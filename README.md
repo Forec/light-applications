@@ -21,6 +21,7 @@ This repository is an index for several self-made light-applications, for fun an
 * [**Markov-Speaking（马尔科夫链随机语言生成库）**](https://github.com/Forec/Markov-Speaking), written in `Python 2.7`, can generate English/Chinese random sentences based on the trainning file. 
 * Capture [**Text-Cooccurrence（文本共现）**](https://github.com/Forec/text-cooccurrence) network from a novel and visualize it.
 * A simple [**File Transfer（文件传输/FTP）**](https://github.com/Forec/simple-go-ftp) tool, written in Golang 1.7.3.
+* A ugly tool for testing your semaphore algorithms, see [here](https://github.com/Forec/semaphore-test).
 * [**SYN flood（SYN洪水拒绝服务攻击）**](https://github.com/Forec/ddos-synflood), written in C++, using libnet. Support multi-threads.
 
 ## License

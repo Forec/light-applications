@@ -7,6 +7,8 @@ This repository is an index for several self-made light-applications, for fun an
 * [**Zenith Cloud（顶点云）**](https://github.com/Forec/zenith-cloud), written in Golang 1.7.3, see the [demo](http://cloud.forec.cn/).
 * [**Zenith DM（顶点云设备管理）**](https://github.com/Forec/zenith-monitor), control your devices everywhere, see the [demo](http://cloud-monitor.forec.cn/).
 * [**Online API Platform（在线 API 平台）**](https://github.com/Forec/web-api), provides some online API services on my own website [http://forec.cn](http://forec.cn).
+* [**Sis（日志辅助工具）**](https://github.com/Forec/sis) is a lightweight tool for managing your activities and work logs. You can use this as a calendar with CLI. The tool is written in Haskell.
+* [**EasyLOC（代码行统计）**](https://github.com/Forec/easyloc) is a concurrent lightweight tool for counting your code lines. You can easily extend modules for your own languages or rules. Written in Haskell. 
 * Basic practice for [**assembly languages（汇编语言基础练习题）**](https://github.com/Forec/assembly-exercise), you can give yourself a test and push your code into that repository. 
 * Simple [**Remote-Control（远程控制）**](https://github.com/Forec/remote-control) program with graphical user interface, Written in C++. 
 * An ugly [**DLL-Injection（DLL注入）**](https://github.com/Forec/inject-windows-dll) tool without GUI, Written in C++. A x64 **DLL template（DLL模板）** is also in that repository, which can be used in injection.
